@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_show_app/bloc/movie_detail_bloc/movie_details_bloc.dart';
 import 'package:tv_show_app/bloc/movie_list_bloc.dart';
 import 'package:tv_show_app/pages/tv_shows_list.dart';
+import 'package:tv_show_app/utils/dependecie_injections.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,7 +12,7 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // setupGetItDependencies();
+  setupGetItDependencies();
   runApp(const MyApp());
 }
 

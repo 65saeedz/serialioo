@@ -134,11 +134,6 @@ class TvShowDetailsView extends StatelessWidget {
                   width: 200,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
-                    // child: Image.network(
-                    //   fit: BoxFit.cover,
-                    //   show.pictures![index],
-                    //   width: pageWidth,
-                    // ),
                     child: CachedNetworkImage(
                       placeholder: (context, url) => Center(
                           child: LoadingAnimationWidget.staggeredDotsWave(

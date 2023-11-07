@@ -13,16 +13,21 @@ class TvShowsListPage extends StatefulWidget {
 }
 
 class _TvShowsListPageState extends State<TvShowsListPage> {
-  int currentPage = 1;
+  final _controller = ScrollController();
   @override
   void initState() {
-    getTheList(page: currentPage);
     super.initState();
+    getTheList();
+    _controller.addListener(() {
+      if (_controller.offset >= _controller.position.maxScrollExtent &&
+          !_controller.position.outOfRange) {
+        context.read<MovieListBloc>().add(MovieListEvent.moviesFetched());
+      }
+    });
   }
 
-  getTheList({required int page}) {
-    context.read<MovieListBloc>()
-      ..add(MovieListEvent.moviesFetched(page: page));
+  getTheList() {
+    context.read<MovieListBloc>()..add(MovieListEvent.moviesFetched());
   }
 
   @override
@@ -52,7 +57,7 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
                 child: Text('error'),
               ));
             },
-            success: (movieListModel) {
+            success: (movieListModel, hasReachMax) {
               return Column(
                 children: [
                   Flexible(
@@ -67,7 +72,7 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            // height: 20,
+                            height: 20,
                             width: MediaQuery.of(context).size.width,
                           ),
                           Text(
@@ -78,7 +83,13 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
                       ),
                     ),
                   ),
-                  Flexible(flex: 8, child: grid(movieListModel.tvShows ?? [])),
+                  Flexible(
+                    flex: 7,
+                    child: grid(
+                      movieListModel,
+                      hasReachMax,
+                    ),
+                  ),
                 ],
               );
             },
@@ -88,7 +99,7 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
     );
   }
 
-  Center grid(List<TvShow> tvList) {
+  Center grid(List<TvShow> tvList, bool hasReachedMax) {
     return Center(
       child: GridView.builder(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -99,11 +110,29 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
           mainAxisExtent: 350,
           // childAspectRatio: 1 / 2,
         ),
-        itemCount: tvList.length,
+        controller: _controller,
+        itemCount: tvList.length + 1,
         itemBuilder: (BuildContext context, int index) {
-          return TvShowCard(
-            tvShow: tvList[index],
-          );
+          if (index < tvList.length) {
+            return TvShowCard(tvShow: tvList[index]);
+          } else {
+            return SizedBox(
+              height: 24,
+              width: 24,
+              child: hasReachedMax
+                  ? const Center(
+                      child: Text('End of List'),
+                    )
+                  : Center(
+                      child: Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                              color: Colors.black, size: 50)),
+                    ),
+            );
+          }
+          // return TvShowCard(
+          //   tvShow: tvList[index],
+          // );
         },
       ),
     );

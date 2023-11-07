@@ -16,20 +16,19 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MovieListEvent {
-  int get page => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int page) moviesFetched,
+    required TResult Function() moviesFetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int page)? moviesFetched,
+    TResult? Function()? moviesFetched,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int page)? moviesFetched,
+    TResult Function()? moviesFetched,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,10 +48,6 @@ mixin _$MovieListEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $MovieListEventCopyWith<MovieListEvent> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -60,8 +55,6 @@ abstract class $MovieListEventCopyWith<$Res> {
   factory $MovieListEventCopyWith(
           MovieListEvent value, $Res Function(MovieListEvent) then) =
       _$MovieListEventCopyWithImpl<$Res, MovieListEvent>;
-  @useResult
-  $Res call({int page});
 }
 
 /// @nodoc
@@ -73,30 +66,13 @@ class _$MovieListEventCopyWithImpl<$Res, $Val extends MovieListEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_value.copyWith(
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$_MoviesFetchedCopyWith<$Res>
-    implements $MovieListEventCopyWith<$Res> {
+abstract class _$$_MoviesFetchedCopyWith<$Res> {
   factory _$$_MoviesFetchedCopyWith(
           _$_MoviesFetched value, $Res Function(_$_MoviesFetched) then) =
       __$$_MoviesFetchedCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int page});
 }
 
 /// @nodoc
@@ -106,75 +82,51 @@ class __$$_MoviesFetchedCopyWithImpl<$Res>
   __$$_MoviesFetchedCopyWithImpl(
       _$_MoviesFetched _value, $Res Function(_$_MoviesFetched) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_$_MoviesFetched(
-      page: null == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_MoviesFetched implements _MoviesFetched {
-  const _$_MoviesFetched({required this.page});
-
-  @override
-  final int page;
+  const _$_MoviesFetched();
 
   @override
   String toString() {
-    return 'MovieListEvent.moviesFetched(page: $page)';
+    return 'MovieListEvent.moviesFetched()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_MoviesFetched &&
-            (identical(other.page, page) || other.page == page));
+        (other.runtimeType == runtimeType && other is _$_MoviesFetched);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, page);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_MoviesFetchedCopyWith<_$_MoviesFetched> get copyWith =>
-      __$$_MoviesFetchedCopyWithImpl<_$_MoviesFetched>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int page) moviesFetched,
+    required TResult Function() moviesFetched,
   }) {
-    return moviesFetched(page);
+    return moviesFetched();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int page)? moviesFetched,
+    TResult? Function()? moviesFetched,
   }) {
-    return moviesFetched?.call(page);
+    return moviesFetched?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int page)? moviesFetched,
+    TResult Function()? moviesFetched,
     required TResult orElse(),
   }) {
     if (moviesFetched != null) {
-      return moviesFetched(page);
+      return moviesFetched();
     }
     return orElse();
   }
@@ -209,14 +161,7 @@ class _$_MoviesFetched implements _MoviesFetched {
 }
 
 abstract class _MoviesFetched implements MovieListEvent {
-  const factory _MoviesFetched({required final int page}) = _$_MoviesFetched;
-
-  @override
-  int get page;
-  @override
-  @JsonKey(ignore: true)
-  _$$_MoviesFetchedCopyWith<_$_MoviesFetched> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _MoviesFetched() = _$_MoviesFetched;
 }
 
 /// @nodoc
@@ -225,7 +170,8 @@ mixin _$MovieListState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(MovieListModel movieListModel) success,
+    required TResult Function(List<TvShow> movieListModel, bool hasReachMax)
+        success,
     required TResult Function() failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -233,7 +179,7 @@ mixin _$MovieListState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(MovieListModel movieListModel)? success,
+    TResult? Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult? Function()? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -241,7 +187,7 @@ mixin _$MovieListState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(MovieListModel movieListModel)? success,
+    TResult Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult Function()? failure,
     required TResult orElse(),
   }) =>
@@ -330,7 +276,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(MovieListModel movieListModel) success,
+    required TResult Function(List<TvShow> movieListModel, bool hasReachMax)
+        success,
     required TResult Function() failure,
   }) {
     return initial();
@@ -341,7 +288,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(MovieListModel movieListModel)? success,
+    TResult? Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult? Function()? failure,
   }) {
     return initial?.call();
@@ -352,7 +299,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(MovieListModel movieListModel)? success,
+    TResult Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -443,7 +390,8 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(MovieListModel movieListModel) success,
+    required TResult Function(List<TvShow> movieListModel, bool hasReachMax)
+        success,
     required TResult Function() failure,
   }) {
     return loading();
@@ -454,7 +402,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(MovieListModel movieListModel)? success,
+    TResult? Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult? Function()? failure,
   }) {
     return loading?.call();
@@ -465,7 +413,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(MovieListModel movieListModel)? success,
+    TResult Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -523,9 +471,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @useResult
-  $Res call({MovieListModel movieListModel});
-
-  $MovieListModelCopyWith<$Res> get movieListModel;
+  $Res call({List<TvShow> movieListModel, bool hasReachMax});
 }
 
 /// @nodoc
@@ -539,35 +485,43 @@ class __$$_SuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? movieListModel = null,
+    Object? hasReachMax = null,
   }) {
     return _then(_$_Success(
       movieListModel: null == movieListModel
-          ? _value.movieListModel
+          ? _value._movieListModel
           : movieListModel // ignore: cast_nullable_to_non_nullable
-              as MovieListModel,
+              as List<TvShow>,
+      hasReachMax: null == hasReachMax
+          ? _value.hasReachMax
+          : hasReachMax // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $MovieListModelCopyWith<$Res> get movieListModel {
-    return $MovieListModelCopyWith<$Res>(_value.movieListModel, (value) {
-      return _then(_value.copyWith(movieListModel: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success({required this.movieListModel});
+  const _$_Success(
+      {required final List<TvShow> movieListModel, this.hasReachMax = false})
+      : _movieListModel = movieListModel;
+
+  final List<TvShow> _movieListModel;
+  @override
+  List<TvShow> get movieListModel {
+    if (_movieListModel is EqualUnmodifiableListView) return _movieListModel;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_movieListModel);
+  }
 
   @override
-  final MovieListModel movieListModel;
+  @JsonKey()
+  final bool hasReachMax;
 
   @override
   String toString() {
-    return 'MovieListState.success(movieListModel: $movieListModel)';
+    return 'MovieListState.success(movieListModel: $movieListModel, hasReachMax: $hasReachMax)';
   }
 
   @override
@@ -575,12 +529,15 @@ class _$_Success implements _Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
-            (identical(other.movieListModel, movieListModel) ||
-                other.movieListModel == movieListModel));
+            const DeepCollectionEquality()
+                .equals(other._movieListModel, _movieListModel) &&
+            (identical(other.hasReachMax, hasReachMax) ||
+                other.hasReachMax == hasReachMax));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, movieListModel);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_movieListModel), hasReachMax);
 
   @JsonKey(ignore: true)
   @override
@@ -593,10 +550,11 @@ class _$_Success implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(MovieListModel movieListModel) success,
+    required TResult Function(List<TvShow> movieListModel, bool hasReachMax)
+        success,
     required TResult Function() failure,
   }) {
-    return success(movieListModel);
+    return success(movieListModel, hasReachMax);
   }
 
   @override
@@ -604,10 +562,10 @@ class _$_Success implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(MovieListModel movieListModel)? success,
+    TResult? Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult? Function()? failure,
   }) {
-    return success?.call(movieListModel);
+    return success?.call(movieListModel, hasReachMax);
   }
 
   @override
@@ -615,12 +573,12 @@ class _$_Success implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(MovieListModel movieListModel)? success,
+    TResult Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(movieListModel);
+      return success(movieListModel, hasReachMax);
     }
     return orElse();
   }
@@ -664,10 +622,12 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements MovieListState {
-  const factory _Success({required final MovieListModel movieListModel}) =
-      _$_Success;
+  const factory _Success(
+      {required final List<TvShow> movieListModel,
+      final bool hasReachMax}) = _$_Success;
 
-  MovieListModel get movieListModel;
+  List<TvShow> get movieListModel;
+  bool get hasReachMax;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
@@ -712,7 +672,8 @@ class _$_Failure implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(MovieListModel movieListModel) success,
+    required TResult Function(List<TvShow> movieListModel, bool hasReachMax)
+        success,
     required TResult Function() failure,
   }) {
     return failure();
@@ -723,7 +684,7 @@ class _$_Failure implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(MovieListModel movieListModel)? success,
+    TResult? Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult? Function()? failure,
   }) {
     return failure?.call();
@@ -734,7 +695,7 @@ class _$_Failure implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(MovieListModel movieListModel)? success,
+    TResult Function(List<TvShow> movieListModel, bool hasReachMax)? success,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
