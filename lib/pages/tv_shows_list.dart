@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tv_show_app/bloc/movie_list_bloc.dart';
 import 'package:tv_show_app/models/movie_list_model/tv_show.dart';
 import 'package:tv_show_app/widgets/tv_show_card.dart';
@@ -39,7 +40,9 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
               ));
             },
             loading: () {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: Colors.black, size: 50));
             },
             failure: () {
               return Center(
@@ -64,77 +67,18 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 20,
+                            // height: 20,
+                            width: MediaQuery.of(context).size.width,
                           ),
                           Text(
                             'سریالیو',
                             style: TextStyle(fontSize: 28),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: movieListModel.page! > 1
-                                        ? () {
-                                            getTheList(page: 1);
-                                          }
-                                        : null,
-                                    icon: Icon(
-                                      Icons.keyboard_double_arrow_left_rounded,
-                                      size: 22,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: movieListModel.page! > 1
-                                        ? () {
-                                            getTheList(
-                                                page: movieListModel.page! - 1);
-                                          }
-                                        : null,
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_left_rounded,
-                                      size: 22,
-                                    ),
-                                  ),
-                                  Text('${movieListModel.page} صفحه '),
-                                  IconButton(
-                                    onPressed: movieListModel.page! >=
-                                            movieListModel.pages!
-                                        ? null
-                                        : () {
-                                            getTheList(
-                                                page: movieListModel.page! + 1);
-                                          },
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_right_rounded,
-                                      size: 22,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: movieListModel.page! >=
-                                            movieListModel.pages!
-                                        ? null
-                                        : () {
-                                            getTheList(
-                                                page: movieListModel.pages!);
-                                          },
-                                    icon: Icon(
-                                      Icons.keyboard_double_arrow_right_rounded,
-                                      size: 22,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
                         ],
                       ),
                     ),
                   ),
-                  Flexible(flex: 7, child: grid(movieListModel.tvShows ?? [])),
+                  Flexible(flex: 8, child: grid(movieListModel.tvShows ?? [])),
                 ],
               );
             },

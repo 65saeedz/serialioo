@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tv_show_app/pages/tv_show_details_page.dart';
 
 import '../models/movie_list_model/tv_show.dart';
@@ -36,11 +38,15 @@ class TvShowCard extends StatelessWidget {
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
-              child: Image.network(
-                tvShow.imageThumbnailPath!,
-                width: double.infinity,
-                height: 200,
+              child: CachedNetworkImage(
+                imageUrl: tvShow.imageThumbnailPath!,
                 fit: BoxFit.cover,
+                height: 200,
+                width: double.infinity,
+                placeholder: (context, url) => Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.black, size: 20)),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
             const SizedBox(

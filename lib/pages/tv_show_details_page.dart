@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tv_show_app/bloc/movie_detail_bloc/movie_details_bloc.dart';
 import 'package:tv_show_app/models/show_details_model/movie_details_model.dart';
 
@@ -24,36 +26,44 @@ class TvShowDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     var pageHeight = MediaQuery.of(context).size.height;
     var pageWidth = MediaQuery.of(context).size.width;
-    return Scaffold(body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-      builder: (context, state) {
-        return state.when(
-          initial: () {
-            return Center(
-                child: Container(
-              height: 100,
-              width: 250,
-              child: Text('initial'),
-            ));
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('سریالیو'),
+          centerTitle: true,
+          backgroundColor: Colors.purple.withOpacity(0.5),
+        ),
+        body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () {
+                return Center(
+                    child: Container(
+                  height: 100,
+                  width: 250,
+                  child: Text('initial'),
+                ));
+              },
+              loading: () {
+                return Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: Colors.black, size: 50));
+              },
+              failure: () {
+                return Center(
+                    child: Container(
+                  height: 100,
+                  width: 250,
+                  child: Text('error'),
+                ));
+              },
+              success: (showDetailsModel) => successBody(
+                pageWidth: pageWidth,
+                pageHeight: pageHeight,
+                show: showDetailsModel.tvShow!,
+              ),
+            );
           },
-          loading: () {
-            return Center(child: CircularProgressIndicator());
-          },
-          failure: () {
-            return Center(
-                child: Container(
-              height: 100,
-              width: 250,
-              child: Text('error'),
-            ));
-          },
-          success: (showDetailsModel) => successBody(
-            pageWidth: pageWidth,
-            pageHeight: pageHeight,
-            show: showDetailsModel.tvShow!,
-          ),
-        );
-      },
-    ));
+        ));
   }
 
   SingleChildScrollView successBody(
@@ -64,29 +74,32 @@ class TvShowDetailsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: pageWidth,
-            // height: pageHeight / 2.2,
-            child: Image.network(
-              show.imagePath!,
-              fit: BoxFit.fitHeight,
-              width: pageWidth,
+            height: 12,
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: pageHeight / 2.2,
+            child: CachedNetworkImage(
+              imageUrl: show.imagePath!,
+              fit: BoxFit.contain,
+              placeholder: (context, url) => Center(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: Colors.black, size: 40)),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
           const SizedBox(
             height: 8,
           ),
-          Row(
-            children: [
-              SizedBox(
-                width: 16,
-              ),
-              Text(
-                show.name!,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              show.name!,
+              overflow: TextOverflow.fade,
+              softWrap: true,
+              maxLines: 2,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -121,10 +134,18 @@ class TvShowDetailsView extends StatelessWidget {
                   width: 200,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
-                    child: Image.network(
+                    // child: Image.network(
+                    //   fit: BoxFit.cover,
+                    //   show.pictures![index],
+                    //   width: pageWidth,
+                    // ),
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                              color: Colors.black, size: 20)),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      imageUrl: show.pictures![index],
                       fit: BoxFit.cover,
-                      show.pictures![index],
-                      width: pageWidth,
                     ),
                   ),
                 );
