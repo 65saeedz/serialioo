@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tv_show_app/bloc/movie_detail_bloc/movie_details_bloc.dart';
 import 'package:tv_show_app/models/show_details_model/movie_details_model.dart';
+import 'package:tv_show_app/widgets/episode_listview.dart';
+import 'package:tv_show_app/widgets/genres.dart';
+import 'package:tv_show_app/widgets/horizontal_pic_listview.dart';
 
 class TvShowDetailsPage extends StatelessWidget {
   final int showId;
@@ -76,18 +79,7 @@ class TvShowDetailsView extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          Container(
-            alignment: Alignment.center,
-            height: pageHeight / 2.2,
-            child: CachedNetworkImage(
-              imageUrl: show.imagePath!,
-              fit: BoxFit.contain,
-              placeholder: (context, url) => Center(
-                  child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: Colors.black, size: 40)),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-          ),
+          headerPic(pageHeight, show),
           const SizedBox(
             height: 8,
           ),
@@ -110,7 +102,7 @@ class TvShowDetailsView extends StatelessWidget {
               spacing: 10,
               crossAxisAlignment: WrapCrossAlignment.start,
               children: List.generate(show.genres!.length,
-                  (index) => genreComponent(show.genres![index])),
+                  (index) => GenreWidget(genre: show.genres![index])),
             ),
           ),
           Padding(
@@ -119,34 +111,7 @@ class TvShowDetailsView extends StatelessWidget {
               show.description!,
             ),
           ),
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              scrollDirection: Axis.horizontal,
-              itemCount: show.pictures!.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  width: 200,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
-                    child: CachedNetworkImage(
-                      placeholder: (context, url) => Center(
-                          child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: Colors.black, size: 20)),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      imageUrl: show.pictures![index],
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          HorizontalPicListview(show: show),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
             child: Text(
@@ -196,39 +161,27 @@ class TvShowDetailsView extends StatelessWidget {
               style: TextStyle(color: Colors.green.shade800, fontSize: 24),
             ),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: ScrollPhysics(),
-            itemCount: show.episodes!.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider();
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                child: Text(
-                  'Episode :${show.episodes![index].season}/${show.episodes![index].episode} : ${show.episodes![index].name}',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.green.shade800, fontSize: 24),
-                ),
-              );
-            },
+          SizedBox(
+            height: 32,
           ),
+          EpisodesListView(show: show),
         ],
       ),
     );
   }
 
-  Container genreComponent(String genre) {
+  Container headerPic(double pageHeight, TvShow show) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 9),
-      decoration: const BoxDecoration(
-        color: Colors.orange,
-        borderRadius: BorderRadius.all(
-          Radius.circular(16),
-        ),
+      alignment: Alignment.center,
+      height: pageHeight / 2.2,
+      child: CachedNetworkImage(
+        imageUrl: show.imagePath!,
+        fit: BoxFit.contain,
+        placeholder: (context, url) => Center(
+            child: LoadingAnimationWidget.staggeredDotsWave(
+                color: Colors.black, size: 40)),
+        errorWidget: (context, url, error) => Icon(Icons.error),
       ),
-      child: Text(genre),
     );
   }
 }

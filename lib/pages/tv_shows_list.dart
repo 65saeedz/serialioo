@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:tv_show_app/bloc/movie_list_bloc.dart';
-import 'package:tv_show_app/models/movie_list_model/tv_show.dart';
-import 'package:tv_show_app/widgets/tv_show_card.dart';
+import 'package:tv_show_app/widgets/infinit_gridview.dart';
 
 class TvShowsListPage extends StatefulWidget {
   const TvShowsListPage({super.key});
@@ -85,54 +84,16 @@ class _TvShowsListPageState extends State<TvShowsListPage> {
                   ),
                   Flexible(
                     flex: 7,
-                    child: grid(
-                      movieListModel,
-                      hasReachMax,
+                    child: InfinitGridView(
+                      controller: _controller,
+                      tvList: movieListModel,
+                      hasReachedMax: hasReachMax,
                     ),
                   ),
                 ],
               );
             },
           );
-        },
-      ),
-    );
-  }
-
-  Center grid(List<TvShow> tvList, bool hasReachedMax) {
-    return Center(
-      child: GridView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          mainAxisExtent: 350,
-          // childAspectRatio: 1 / 2,
-        ),
-        controller: _controller,
-        itemCount: tvList.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index < tvList.length) {
-            return TvShowCard(tvShow: tvList[index]);
-          } else {
-            return SizedBox(
-              height: 24,
-              width: 24,
-              child: hasReachedMax
-                  ? const Center(
-                      child: Text('End of List'),
-                    )
-                  : Center(
-                      child: Center(
-                          child: LoadingAnimationWidget.staggeredDotsWave(
-                              color: Colors.black, size: 50)),
-                    ),
-            );
-          }
-          // return TvShowCard(
-          //   tvShow: tvList[index],
-          // );
         },
       ),
     );
