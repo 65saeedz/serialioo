@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_show_app/bloc/movie_detail_bloc/movie_details_bloc.dart';
-import 'package:tv_show_app/bloc/movie_list_bloc.dart';
+import 'package:tv_show_app/bloc/movie_list_bloc/movie_list_bloc.dart';
 import 'package:tv_show_app/pages/tv_shows_list.dart';
 import 'package:tv_show_app/utils/dependecie_injections.dart';
 

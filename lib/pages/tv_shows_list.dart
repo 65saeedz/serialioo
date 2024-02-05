@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:tv_show_app/bloc/movie_list_bloc.dart';
+import 'package:tv_show_app/bloc/movie_list_bloc/movie_list_bloc.dart';
 import 'package:tv_show_app/widgets/infinit_gridview.dart';
 
 class TvShowsListPage extends StatefulWidget {

@@ -33,7 +33,7 @@ class TvShowDetailsView extends StatelessWidget {
         appBar: AppBar(
           title: Text('سریالیو'),
           centerTitle: true,
-          backgroundColor: Colors.purple.withOpacity(0.5),
+          backgroundColor: Colors.transparent.withOpacity(0.5),
         ),
         body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
           builder: (context, state) {
